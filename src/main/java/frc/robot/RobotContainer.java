@@ -6,9 +6,21 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PS4Controller;
-import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveAndShoot;
+import frc.robot.commands.DriveStraight;
+import frc.robot.commands.ShootBall;
+import frc.robot.commands.Target;
+import frc.robot.subsystems.Agitator;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LimeLight;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 import frc.robot.util.VorTXController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -22,14 +34,35 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drive drive = new Drive();
+  public static final Drive drive = new Drive(0,0);
 
-  private final DriveCommand m_autoCommand = new DriveCommand(drive,0,0);
+  static final Agitator agitator = new Agitator();
+  //private final LimeLight limeLight = new LimeLight();
+
+  //private final Target target = new Target(limeLight);
+
+  //private final Turret turret = new Turret();
+
+  static final Intake intake = new Intake();
+  static final Indexer indexer = new Indexer();
+
+  static final Shooter shooter = new Shooter();
+
+  static final Climber climber = new Climber();
+
+  static final LimeLight limelight = new LimeLight();
+
+
+ 
+  // private final DriveStraight m_DriveStraight = new DriveStraight(intake, drive, .3, 0.0);
+  // private final ShootBall m_shootBall = new ShootBall(shooter, indexer);
+
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    drive.setDefaultCommand(new DriveCommand(drive, 0, 0));
+    //limeLight.setDefaultCommand(new Target(limeLight));
     configureButtonBindings();
   }
 
@@ -41,43 +74,39 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-
     //binding triggers to arcade drive behavior
-    main.r2.whileHeld(new DriveCommand(drive, .5 + yAxisReturn(), xAxisReturn()));
-    main.l2.whileHeld(new DriveCommand(drive, -.5 + yAxisReturn(), xAxisReturn()));
+    //main.square.whenPressed(new Target(limeLight));
+    //main.circle.toggleWhenPressed(new ShootBall(shooter, indexer));
 
-    //augmenting arcade drive based on the position of the joystick
-    main.pov0.whileHeld(new DriveCommand(drive, 1, 0));
-    main.pov180.whileHeld(new DriveCommand(drive, .5, 0));
-    main.pov90.whileHeld(new DriveCommand(drive, .75, .25));
-    main.pov0.whileHeld(new DriveCommand(drive, .75, -.25));
-    main.pov45.whileHeld(new DriveCommand(drive, .75, .125));
-    main.pov135.whileHeld(new DriveCommand(drive, .5, .125));
-    main.pov225.whileHeld(new DriveCommand(drive, .5, -.125));
-    main.pov315.whileHeld(new DriveCommand(drive, .75, -.125));
   }
 
-  public double xAxisReturn()
-  {
-    return main.getLeftX()/2;
-  }
-  public double yAxisReturn()
-  {
-    return main.getLeftY()/2;
-  }
 
   /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * Use thisto pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
+    //return m_DriveStraight;
   }
 
-  VorTXController main = new VorTXController(0);
-  VorTXController co = new VorTXController(1);
+  public DriveStraight getDriveAutoCommand()
+  {
+    return null;
+    // return m_DriveStraight;
+  } 
+
+  public ShootBall getShootBallCommand()
+  {
+    return null;
+    // return m_shootBall;
+  } 
+
+  public static VorTXController main = new VorTXController(0);
+  public static VorTXController co = new VorTXController(1);
+  public static PS4Controller c_shooterTest = new PS4Controller(2);
   
 
 

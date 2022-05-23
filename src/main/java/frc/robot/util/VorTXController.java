@@ -16,11 +16,12 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  */
 public class VorTXController extends PS4Controller {
 	public JoystickButton cross, circle, square, triangle, l2, r2, share, options, ls, rs, l1, r1;
-
+	public PS4Controller c_driverController = new PS4Controller(3);
 	public POVButton pov0, pov45, pov90, pov135, pov180, pov225, pov270, pov315;
 
 	public VorTXController(int port) {
 		super(port);
+		
 
 		cross = new JoystickButton(this, 2);
 		circle = new JoystickButton(this, 3);
